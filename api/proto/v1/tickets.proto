@@ -1,0 +1,23 @@
+syntax = "proto3";  // версия proto (по умолчанию - proto2)
+
+package tickets.v1;  // пакет - для операций import'а
+option go_package = "pkg/tickets/v1";  // полный путь пакета для go
+
+import "google/protobuf/timestamp.proto";  // импортируем из другого proto (стандартная поставка)
+
+service TicketsService {
+  rpc Search(SearchRequest) returns (stream SearchResponse);
+}
+
+message SearchRequest {
+  google.protobuf.Timestamp date = 1;
+  string cityFrom = 2;
+  string cityTo = 3;
+}
+
+message SearchResponse {
+  sint64 id = 1;
+  google.protobuf.Timestamp departureTime = 2;
+  google.protobuf.Timestamp travelTime = 3;
+  uint64 cost = 4;
+}
